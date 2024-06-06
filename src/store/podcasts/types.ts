@@ -4,19 +4,25 @@ export interface PodcastStructure {
       ["im:id"]: string;
     };
   };
-  ["im:image"]: [
+  "im:image": [
     {
       label: string;
     },
   ];
-  ["im:name"]: {
+  "im:name": {
     label: string;
   };
-  ["im:artist"]: {
+  "im:artist": {
     label: string;
   };
   summary: {
     label: string;
+  };
+}
+
+export interface FeedResponse {
+  feed: {
+    entry: PodcastStructure[];
   };
 }
 
