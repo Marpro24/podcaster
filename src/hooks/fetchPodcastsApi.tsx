@@ -26,7 +26,7 @@ const useFetchPodcasts = () => {
         throw new Error("Bad network response");
       }
     } catch (error) {
-      setError(error.message);
+      setError((error as Error).message);
       setStatus("failed");
     }
   };
