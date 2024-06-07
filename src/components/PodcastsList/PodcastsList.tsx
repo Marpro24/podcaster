@@ -1,5 +1,6 @@
 import PodcastsListStyled from "./PodcastsListstyled";
 import useFetchPodcasts from "../../hooks/fetchPodcastsApi";
+import { Link } from "react-router-dom";
 
 export const PodcastsList = (): React.ReactElement => {
   const { podcasts, status, error } = useFetchPodcasts();
@@ -16,20 +17,22 @@ export const PodcastsList = (): React.ReactElement => {
     <PodcastsListStyled>
       {podcasts.map((podcast) => (
         <li className="podcast-item" key={podcast.id.attributes["im:id"]}>
-          <img
-            className="podcast-image"
-            src={podcast["im:image"][0].label}
-            alt={podcast["im:name"].label}
-            width={60}
-            height={60}
-          />
-          <div className="podcast-text-container">
-            <h2 className="podcast-title">{podcast["im:name"].label}</h2>
-            <p className="podcast-author">
-              {" "}
-              Author: {podcast["im:artist"].label}
-            </p>
-          </div>
+          <Link to={`/podcast/${podcast.id.attributes["im:id"]}`}>
+            <img
+              className="podcast-image"
+              src={podcast["im:image"][0].label}
+              alt={podcast["im:name"].label}
+              width={60}
+              height={60}
+            />
+            <div className="podcast-text-container">
+              <h2 className="podcast-title">{podcast["im:name"].label}</h2>
+              <p className="podcast-author">
+                {" "}
+                Author: {podcast["im:artist"].label}
+              </p>
+            </div>
+          </Link>
         </li>
       ))}
     </PodcastsListStyled>
