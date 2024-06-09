@@ -3,6 +3,7 @@ import styled from "styled-components";
 const PodcastDetailStyled = styled.article`
   text-align: center;
   margin-top: 20px;
+  display: flex;
 
   .detail-card {
     display: flex;
@@ -53,6 +54,32 @@ const PodcastDetailStyled = styled.article`
     line-height: 1.4;
     margin: 9px;
     word-break: break-word;
+  }
+
+  .episodes-count {
+    font-size: 1rem;
+    border: solid #0c0c0c3d;
+    margin: 10px;
+    padding: 10px;
+  }
+  .episodes-count__text {
+    position: relative;
+    right: 180px;
+  }
+
+  .episodes-container {
+    display: grid;
+    grid-template-rows: repeat(20, 1fr);
+    border: solid #0c0c0c3d;
+    height: 300px;
+    width: 500px;
+    margin: 10px;
+  }
+
+  .episodes-container__info {
+    display: flex;
+    gap: 160px;
+    margin: 20px;
   }
 `;
 
