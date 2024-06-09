@@ -1,0 +1,34 @@
+import { useCallback } from "react";
+import useLocalStorage from "./useLocalStorage";
+
+const usePodcastDetailApi = () => {
+  const { setPodcast } = useLocalStorage();
+
+  const getPodcastById = useCallback(
+    async (id: number) => {
+      console.log("loading");
+
+      const API_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`)}`;
+
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        const parsedData = JSON.parse(data.contents);
+        const podcastData = parsedData.results[0];
+        setPodcast(podcastData);
+
+        console.log("success");
+
+        return podcastData;
+      } catch {
+        console.log("failed");
+        throw new Error("Podcast details not found");
+      }
+    },
+    [setPodcast],
+  );
+
+  return { getPodcastById };
+};
+
+export default usePodcastDetailApi;
