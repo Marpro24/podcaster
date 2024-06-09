@@ -1,16 +1,16 @@
 import PodcastsListStyled from "./PodcastsListstyled";
-import useFetchPodcasts from "../../hooks/fetchPodcastsApi";
+import usePodcastsApi from "../../hooks/usePodcastsApi";
 import { Link } from "react-router-dom";
 
 export const PodcastsList = (): React.ReactElement => {
-  const { podcasts, status, error } = useFetchPodcasts();
+  const { podcasts, status } = usePodcastsApi();
 
   if (status === "loading") {
     return <div>Loading podcasts...</div>;
   }
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return <div>Error: podcasts not found {}</div>;
   }
 
   return (
