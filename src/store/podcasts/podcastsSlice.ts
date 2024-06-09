@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PodcastStateStructure, PodcastStructure } from "./types";
+import {
+  PodcastByIdStructure,
+  PodcastStateStructure,
+  PodcastStructure,
+} from "./types";
 
 export const initialPodcastsState: PodcastStateStructure = {
   podcasts: [],
@@ -16,9 +20,18 @@ const podcastsSlice = createSlice({
       ...currentState,
       podcasts: action.payload,
     }),
+    loadSelectedPodcast: (
+      currentState,
+      action: PayloadAction<PodcastByIdStructure>,
+    ) => ({
+      ...currentState,
+      selectedPodcast: action.payload,
+    }),
   },
 });
 
 export const podcastsReducer = podcastsSlice.reducer;
-export const { loadPodcasts: loadPodcastsActionCreator } =
-  podcastsSlice.actions;
+export const {
+  loadPodcasts: loadPodcastsActionCreator,
+  loadSelectedPodcast: loadSelectedPodcastActionCreator,
+} = podcastsSlice.actions;
