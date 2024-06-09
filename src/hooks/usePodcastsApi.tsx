@@ -3,31 +3,27 @@ import { FeedResponse, PodcastStructure } from "../store/podcasts/types";
 
 const API_URL = `https://api.allorigins.win/get?url=${encodeURIComponent("https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json")}`;
 
-const useFetchPodcasts = () => {
+const usePodcastsApi = () => {
   const [podcasts, setPodcasts] = useState<PodcastStructure[]>([]);
-  const [status, setStatus] = useState<string>("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>("");
 
-  const fetchPodcastsApi = async () => {
+  const getPodcastApi = async () => {
     setStatus("loading");
     try {
       const response = await fetch(API_URL);
-      if (response.ok) {
-        const data = await response.json();
-        const parsedData: FeedResponse = JSON.parse(data.contents);
-        setPodcasts(parsedData.feed.entry);
-        localStorage.setItem("podcasts", JSON.stringify(parsedData.feed.entry));
-        localStorage.setItem(
-          "podcastsFetchTime",
-          new Date().getTime().toString(),
-        );
-        setStatus("success");
-      } else {
-        throw new Error("Bad network response");
-      }
-    } catch (error) {
-      setError((error as Error).message);
+      const data = await response.json();
+      const parsedData: FeedResponse = JSON.parse(data.contents);
+
+      setPodcasts(parsedData.feed.entry);
+      localStorage.setItem("podcasts", JSON.stringify(parsedData.feed.entry));
+      localStorage.setItem(
+        "podcastsFetchTime",
+        new Date().getTime().toString(),
+      );
+      setStatus("success");
+    } catch {
       setStatus("failed");
+      throw new Error("Podcasts not found");
     }
   };
 
@@ -46,10 +42,10 @@ const useFetchPodcasts = () => {
       }
     }
 
-    fetchPodcastsApi();
+    getPodcastApi();
   }, []);
 
-  return { podcasts, status, error };
+  return { podcasts, status };
 };
 
-export default useFetchPodcasts;
+export default usePodcastsApi;
