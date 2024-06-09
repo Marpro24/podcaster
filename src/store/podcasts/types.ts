@@ -33,19 +33,10 @@ export interface PodcastByIdStructure {
   collectionName: string;
   artistName: string;
   trackName: string;
-  trackId: number;
-  episodeGuid: string;
   releaseDate: number;
   trackTimeMillis: number;
-  episodes?: EpisodeStructure[];
 }
 
-export interface EpisodeStructure {
-  trackId: number;
-  trackName: string;
-  releaseDate: number;
-  trackTimeMillis: number;
-}
 export interface PodcastStateStructure {
   podcasts: PodcastStructure[];
   selectedPodcast?: PodcastByIdStructure;
