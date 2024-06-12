@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import usePodcastDetailApi from "../../hooks/usePodcastById";
 import PodcastDetailStyled from "./PodcastDetailStyled";
 import { useEffect } from "react";
@@ -31,16 +31,18 @@ export const PodcastDetail = (): React.ReactElement => {
     }
   }, [getPodcastById, podcastId, dispatch, getPodcast, podcastDetails]);
 
-  return podcastDetails ? (
+  return podcastDetails && podcastDetails.collectionId === +podcastId! ? (
     <PodcastDetailStyled>
       <div className="detail-card">
-        <img
-          className="detail-card__image"
-          src={podcastDetails?.artworkUrl600}
-          alt={podcastDetails?.collectionName}
-          width={140}
-          height={140}
-        />
+        <Link to={`/`}>
+          <img
+            className="detail-card__image"
+            src={podcastDetails?.artworkUrl600}
+            alt={podcastDetails?.collectionName}
+            width={140}
+            height={140}
+          />
+        </Link>
         <div className="detail-card__credits">
           <span className="detail-card__title">
             {podcastDetails?.collectionName}
@@ -62,10 +64,26 @@ export const PodcastDetail = (): React.ReactElement => {
         </div>
         <div className="episodes-container">
           <div className="episodes-container__info">
-            <div> Title</div>
-            <div>Date</div>
-            <div>Duration</div>
+            <span className="episodes-container__header-title"> Title</span>
+            <span className="episodes-container__header-date">Date</span>
+            <span className="episodes-container__header-duration">
+              Duration
+            </span>
           </div>
+
+          {podcastDetails.episodes.map((episode) => (
+            <ul className="episode-list" key={episode.trackId}>
+              <li className="episode-list-episode">
+                <span className="episode-title">{episode.trackName} </span>
+                <span className="episode-date">
+                  {new Date(episode.releaseDate).toLocaleDateString()}
+                </span>
+                <span className="episode-duration">
+                  {Math.floor(episode.trackTimeMillis / 60000)}
+                </span>
+              </li>
+            </ul>
+          ))}
         </div>
       </div>
     </PodcastDetailStyled>
