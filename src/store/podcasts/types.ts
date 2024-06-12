@@ -35,6 +35,15 @@ export interface PodcastByIdStructure {
   trackName: string;
   releaseDate: number;
   trackTimeMillis: number;
+  episodes: EpisodeStructure[];
+}
+
+export interface EpisodeStructure {
+  trackId: number;
+  trackName: string;
+  releaseDate: number;
+  trackTimeMillis: number;
+  trackViewUrl: string;
 }
 
 export interface PodcastStateStructure {

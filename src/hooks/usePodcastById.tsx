@@ -14,7 +14,16 @@ const usePodcastDetailApi = () => {
         const response = await fetch(API_URL);
         const data = await response.json();
         const parsedData = JSON.parse(data.contents);
-        const podcastData = parsedData.results[0];
+        const podcastDescription = parsedData.results[0];
+        const podcastEpisodes = parsedData.results.slice(
+          1,
+          parsedData.results.length,
+        );
+        const podcastData = {
+          ...podcastDescription,
+          episodes: podcastEpisodes,
+        };
+
         setPodcast(podcastData);
 
         console.log("success");

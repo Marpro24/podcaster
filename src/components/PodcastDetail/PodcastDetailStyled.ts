@@ -9,11 +9,10 @@ const PodcastDetailStyled = styled.article`
     display: flex;
     flex-direction: column;
     border: 0.1rem solid;
-    border-color: #0c0c0c3d;
-    box-shadow: #e1d9d9 2px 2px 10px;
-    text-align: left;
+    border-color: #fcfcfc;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     width: 200px;
-    height: inherit;
+    height: fit-content;
   }
 
   .detail-card__image {
@@ -27,9 +26,10 @@ const PodcastDetailStyled = styled.article`
     border-top: 0.1rem solid #c7c8c9;
     margin: 10px;
     line-height: 1.5;
+    text-align: left;
   }
   .detail-card__title {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     font-weight: bolder;
     margin-top: 10px;
   }
@@ -45,41 +45,98 @@ const PodcastDetailStyled = styled.article`
     font-size: 0.7rem;
     font-weight: bold;
     margin: 5px;
+    text-align: left;
   }
 
   .detail-card__summary {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     font-style: italic;
     letter-spacing: 1px;
     line-height: 1.4;
     margin: 9px;
     word-break: break-word;
+    text-align: left;
   }
 
   .episodes-count {
     font-size: 1rem;
-    border: solid #0c0c0c3d;
-    margin: 10px;
+    border: solid #fcfcfc;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-left: 70px;
+    margin-bottom: 10px;
     padding: 10px;
   }
   .episodes-count__text {
     position: relative;
-    right: 180px;
+    right: 280px;
+    font-weight: bold;
   }
 
   .episodes-container {
-    display: grid;
-    grid-template-rows: repeat(20, 1fr);
-    border: solid #0c0c0c3d;
-    height: 300px;
-    width: 500px;
-    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    height: fit-content;
+    width: 700px;
+    margin-left: 70px;
+    border: solid #fcfcfc;
   }
 
   .episodes-container__info {
     display: flex;
     gap: 160px;
-    margin: 20px;
+    margin: 15px;
+    font-size: 0.8rem;
+    margin-right: 20px;
+  }
+
+  .episodes-container__header-title {
+    width: 500px;
+    text-align: left;
+  }
+  .episodes-container__header-date {
+    width: fit-content;
+    position: relative;
+    left: 130px;
+  }
+  .episodes-container__header-duration {
+    width: fit-content;
+    position: relative;
+    left: 15px;
+  }
+
+  .episode-list {
+    width: 100%;
+    list-style-type: none;
+    font-size: 0.7rem;
+    text-align: left;
+  }
+
+  .episode-list:nth-child(even) {
+    background-color: #fcfcfc;
+  }
+
+  .episode-list-episode {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    margin-left: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  .episode-title {
+    width: 500px;
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  .episode-date {
+    width: fit-content;
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  .episode-duration {
+    width: fit-content;
+    display: inline-block;
+    margin-right: 20px;
   }
 `;
 
