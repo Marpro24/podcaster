@@ -74,7 +74,9 @@ export const PodcastDetail = (): React.ReactElement => {
           {podcastDetails.episodes.map((episode) => (
             <ul className="episode-list" key={episode.trackId}>
               <li className="episode-list-episode">
-                <span className="episode-title">{episode.trackName} </span>
+                <Link to={`/podcast/${podcastId}/episode/${episode.trackId}`}>
+                  <span className="episode-title">{episode.trackName} </span>
+                </Link>
                 <span className="episode-date">
                   {new Date(episode.releaseDate).toLocaleDateString()}
                 </span>
