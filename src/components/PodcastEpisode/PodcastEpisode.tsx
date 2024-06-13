@@ -1,13 +1,13 @@
 import { Link, useParams } from "react-router-dom";
-import usePodcastDetailApi from "../../hooks/usePodcastById";
-import PodcastDetailStyled from "./PodcastDetailStyled";
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import usePodcastDetailApi from "../../hooks/usePodcastById";
 import { loadSelectedPodcastActionCreator } from "../../store/podcasts/podcastsSlice";
+import { useEffect } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import PodcastEpisodeStyled from "./PodcastEpisodeStyled";
 
-export const PodcastDetail = (): React.ReactElement => {
-  const { podcastId } = useParams();
+const PodcastEpisode = (): React.ReactElement => {
+  const { podcastId, trackId } = useParams();
   const { getPodcast } = useLocalStorage();
   const { getPodcastById } = usePodcastDetailApi();
   const dispatch = useAppDispatch();
@@ -31,10 +31,14 @@ export const PodcastDetail = (): React.ReactElement => {
     }
   }, [getPodcastById, podcastId, dispatch, getPodcast, podcastDetails]);
 
-  return podcastDetails && podcastDetails.collectionId === +podcastId! ? (
-    <PodcastDetailStyled>
+  const episode = podcastDetails?.episodes.find(
+    (ep) => ep.trackId === +trackId!,
+  );
+
+  return (
+    <PodcastEpisodeStyled>
       <div className="detail-card">
-        <Link to={`/`}>
+        <Link to={`/podcast/${podcastId}`}>
           <img
             className="detail-card__image"
             src={podcastDetails?.artworkUrl600}
@@ -56,42 +60,19 @@ export const PodcastDetail = (): React.ReactElement => {
           {podcastDetails?.collectionName}
         </div>
       </div>
-      <div>
-        <div className="episodes-count">
-          <span className="episodes-count__text">
-            Episodes: {podcastDetails.trackCount}{" "}
-          </span>
-        </div>
-        <div className="episodes-container">
-          <div className="episodes-container__info">
-            <span className="episodes-container__header-title"> Title</span>
-            <span className="episodes-container__header-date">Date</span>
-            <span className="episodes-container__header-duration">
-              Duration
-            </span>
-          </div>
-
-          {podcastDetails.episodes.map((episode) => (
-            <ul className="episode-list" key={episode.trackId}>
-              <li className="episode-list-episode">
-                <Link to={`/podcast/${podcastId}/episode/${episode.trackId}`}>
-                  <span className="episode-title">{episode.trackName} </span>
-                </Link>
-                <span className="episode-date">
-                  {new Date(episode.releaseDate).toLocaleDateString()}
-                </span>
-                <span className="episode-duration">
-                  {Math.floor(episode.trackTimeMillis / 60000)}
-                </span>
-              </li>
-            </ul>
-          ))}
-        </div>
-      </div>
-    </PodcastDetailStyled>
-  ) : (
-    <></>
+      <figure className="episode-container">
+        <figcaption className="episode-title">
+          {" "}
+          {episode?.trackName}{" "}
+        </figcaption>
+        <p className="episode-description"> {episode?.description} </p>
+        <audio className="episode-audio" controls>
+          {" "}
+          <source src={episode?.episodeUrl} type="audio/mpeg" />{" "}
+        </audio>
+      </figure>
+    </PodcastEpisodeStyled>
   );
 };
 
-export default PodcastDetail;
+export default PodcastEpisode;
