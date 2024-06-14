@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import usePodcastDetailApi from "../../hooks/usePodcastById";
 import PodcastDetailStyled from "./PodcastDetailStyled";
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { loadSelectedPodcastActionCreator } from "../../store/podcasts/podcastsSlice";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -30,6 +30,14 @@ export const PodcastDetail = (): React.ReactElement => {
       fetchedPodcast();
     }
   }, [getPodcastById, podcastId, dispatch, getPodcast, podcastDetails]);
+
+  const formatDuration = (milliseconds: number) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${hours > 0 ? `${hours}: ` : ""}${minutes}:${seconds}`;
+  };
 
   return podcastDetails && podcastDetails.collectionId === +podcastId! ? (
     <PodcastDetailStyled>
@@ -81,7 +89,7 @@ export const PodcastDetail = (): React.ReactElement => {
                   {new Date(episode.releaseDate).toLocaleDateString()}
                 </span>
                 <span className="episode-duration">
-                  {Math.floor(episode.trackTimeMillis / 60000)}
+                  {formatDuration(episode.trackTimeMillis)}
                 </span>
               </li>
             </ul>
