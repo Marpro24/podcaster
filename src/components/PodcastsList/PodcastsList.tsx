@@ -1,7 +1,7 @@
-import PodcastsListStyled from "./PodcastsListstyled";
-import usePodcastsApi from "../../hooks/usePodcastsApi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PodcastsListStyled from "./PodcastsListstyled";
+import usePodcastsApi from "../../hooks/usePodcastsApi";
 import FilterBar from "../FilterBar/FilterBar";
 
 export const PodcastsList = (): React.ReactElement => {
