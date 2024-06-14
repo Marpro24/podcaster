@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import usePodcastDetailApi from "../../hooks/usePodcastById";
 import { loadSelectedPodcastActionCreator } from "../../store/podcasts/podcastsSlice";
@@ -35,6 +36,11 @@ const PodcastEpisode = (): React.ReactElement => {
     (ep) => ep.trackId === +trackId!,
   );
 
+  const data = episode?.description;
+  const sanitizedDescription = () => ({
+    __html: DOMPurify.sanitize(data!),
+  });
+
   return (
     <PodcastEpisodeStyled>
       <div className="detail-card">
@@ -65,7 +71,10 @@ const PodcastEpisode = (): React.ReactElement => {
           {" "}
           {episode?.trackName}{" "}
         </figcaption>
-        <p className="episode-description"> {episode?.description} </p>
+        <p
+          className="episode-description"
+          dangerouslySetInnerHTML={sanitizedDescription()}
+        />
         <audio className="episode-audio" controls>
           {" "}
           <source src={episode?.episodeUrl} type="audio/mpeg" />{" "}
