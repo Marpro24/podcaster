@@ -16,7 +16,6 @@ const PodcastsListStyled = styled.ul`
     box-shadow: #e1d9d9 2px 2px 10px;
     text-align: center;
     width: 120px;
-    height: 94px;
   }
 
   .podcast-image {
